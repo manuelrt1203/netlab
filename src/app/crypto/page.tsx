@@ -74,7 +74,7 @@ export default function CryptoPage() {
   ];
 
   return (
-    <div className="max-w-3xl mx-auto px-6 py-10">
+    <div className="max-w-3xl mx-auto px-4 sm:px-6 py-8 sm:py-10">
       <h1 className="text-3xl font-bold text-[#ec4899] mb-2">🔐 Cryptographie classique</h1>
       <p className="text-[#64748b] text-sm mb-6">Chiffrement symétrique de base — fondements de la cryptologie.</p>
 

@@ -12,6 +12,7 @@ const CATEGORIES = [
       { href:"/monitoring", icon:"📡", label:"Monitoring" },
       { href:"/cidr",       icon:"🔢", label:"CIDR"       },
       { href:"/osi",        icon:"📚", label:"OSI"        },
+      { href:"/trames",     icon:"🔬", label:"Trames"     },
     ],
   },
   {

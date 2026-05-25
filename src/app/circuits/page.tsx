@@ -102,7 +102,7 @@ export default function CircuitsPage() {
   const zeros = result ? result.table.length - ones : 0;
 
   return (
-    <div className="max-w-3xl mx-auto px-6 py-10">
+    <div className="max-w-3xl mx-auto px-4 sm:px-6 py-8 sm:py-10">
       <h1 className="text-3xl font-bold text-[#f59e0b] mb-2">⚡ Circuits logiques</h1>
       <p className="text-[#64748b] text-sm mb-6">
         Entrez une expression booléenne — génère la table de vérité automatiquement.
@@ -126,7 +126,7 @@ export default function CircuitsPage() {
       {/* Référence des portes */}
       <div className="glass rounded-xl p-4 mb-5">
         <p className="text-xs text-[#64748b] mb-3">Référence des portes logiques</p>
-        <div className="grid grid-cols-4 gap-2">
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
           {[
             {op:"AND",  sym:"A·B",  desc:"1 si les deux sont 1"},
             {op:"OR",   sym:"A+B",  desc:"1 si au moins un est 1"},

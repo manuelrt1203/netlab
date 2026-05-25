@@ -99,7 +99,7 @@ export default function ArmPage() {
   const run = () => setResult(simulate(code));
 
   return (
-    <div className="max-w-5xl mx-auto px-6 py-10">
+    <div className="max-w-5xl mx-auto px-4 sm:px-6 py-8 sm:py-10">
       <h1 className="text-3xl font-bold text-[#f59e0b] mb-8">⚙️ Simulation ARM</h1>
 
       <div className="flex gap-2 flex-wrap mb-4">
@@ -136,7 +136,7 @@ export default function ArmPage() {
           <div className="space-y-4">
             <div className="glass rounded-xl p-4">
               <p className="text-xs text-[#64748b] mb-3">Registres</p>
-              <div className="grid grid-cols-4 gap-1.5">
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-1.5">
                 {Object.entries(result.regs).map(([r, v]) => (
                   <div key={r} className={`text-center p-1.5 rounded text-xs font-mono ${v !== 0 ? "bg-[#f59e0b]/10 text-[#f59e0b]" : "bg-white/3 text-[#64748b]"}`}>
                     <div className="text-[10px] text-[#64748b]">{r}</div>

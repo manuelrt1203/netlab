@@ -254,7 +254,7 @@ function Hint({ children }: { children: React.ReactNode }) {
 /* ─── Page ──────────────────────────────────────────────────────────── */
 export default function TelecomsPage() {
   return (
-    <div className="max-w-5xl mx-auto px-6 py-10">
+    <div className="max-w-5xl mx-auto px-4 sm:px-6 py-8 sm:py-10">
       <h1 className="text-3xl font-bold text-[#ec4899] mb-2">📶 Télécommunications</h1>
       <p className="text-[#64748b] text-sm mb-8">
         Calculateurs de cours — cliquez <strong>&ldquo;C&apos;est quoi ?&rdquo;</strong> sur chaque outil pour comprendre à quoi il sert.

@@ -349,7 +349,7 @@ export default function Sim3DPage() {
   );
 
   return (
-    <div className="max-w-5xl mx-auto px-6 py-10">
+    <div className="max-w-5xl mx-auto px-4 sm:px-6 py-8 sm:py-10">
       <h1 className="text-3xl font-bold text-[#7c3aed] mb-2">🔷 Simulation 3D</h1>
       <p className="text-[#64748b] text-sm mb-5">
         Choisissez un mode dans le panneau · Molette pour zoomer · Glissez le fond pour tourner

@@ -423,7 +423,7 @@ export default function TrameAnalyzer() {
               className="px-3 py-1.5 text-xs rounded-lg border transition-all"
               style={{ borderColor: p.color + "44", color: p.color, background: p.color + "11" }}>
               {p.label}
-              <span className="text-[#64748b] ml-1.5">{p.desc}</span>
+              <span className="text-[#64748b] ml-1.5 hidden sm:inline">{p.desc}</span>
             </button>
           ))}
         </div>

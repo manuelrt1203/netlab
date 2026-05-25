@@ -85,7 +85,7 @@ export default function RemplacementPage() {
   const color = ALGOS.find(a=>a.id===algo)!.color;
 
   return (
-    <div className="max-w-5xl mx-auto px-6 py-10">
+    <div className="max-w-5xl mx-auto px-4 sm:px-6 py-8 sm:py-10">
       <h1 className="text-3xl font-bold text-[#7c3aed] mb-2">📄 Remplacement de pages</h1>
       <p className="text-[#64748b] text-sm mb-6">Simule les algorithmes de remplacement de pages mémoire virtuelle.</p>
 

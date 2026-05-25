@@ -52,7 +52,7 @@ export default function CidrPage() {
   const result = calc(input);
 
   return (
-    <div className="max-w-3xl mx-auto px-6 py-10">
+    <div className="max-w-3xl mx-auto px-4 sm:px-6 py-8 sm:py-10">
       <h1 className="text-3xl font-bold text-[#00d4ff] mb-2">🔢 Calcul de sous-réseau (CIDR)</h1>
       <p className="text-[#64748b] text-sm mb-6">Entrez une adresse au format <code className="text-[#00d4ff]">IP/préfixe</code></p>
 

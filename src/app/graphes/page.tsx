@@ -225,7 +225,7 @@ export default function GraphesPage() {
   );
 
   return (
-    <div className="max-w-5xl mx-auto px-6 py-10">
+    <div className="max-w-5xl mx-auto px-4 sm:px-6 py-8 sm:py-10">
       <h1 className="text-3xl font-bold text-[#22c55e] mb-2">🕸 Graphes &amp; Dijkstra</h1>
       <p className="text-[#64748b] text-sm mb-5">Construisez un graphe pondéré et visualisez l&apos;algorithme de Dijkstra pas à pas.</p>
 

@@ -69,7 +69,7 @@ export default function Ieee754Page() {
   const colors64 = ["#ef4444",...Array(11).fill("#f59e0b"),...Array(52).fill("#7c3aed")];
 
   return (
-    <div className="max-w-4xl mx-auto px-6 py-10">
+    <div className="max-w-4xl mx-auto px-4 sm:px-6 py-8 sm:py-10">
       <h1 className="text-3xl font-bold text-[#f59e0b] mb-2">🔬 IEEE 754 — Virgule flottante</h1>
       <p className="text-[#64748b] text-sm mb-6">Décompose un nombre réel en représentation binaire IEEE 754 (32 et 64 bits).</p>
 
@@ -97,7 +97,7 @@ export default function Ieee754Page() {
             </div>
             <Bits bits={r32.sign+r32.exp+r32.mant} colors={colors32}
               labels={[["Signe",1,"#ef4444"],["Exposant",8,"#f59e0b"],["Mantisse",23,"#7c3aed"]]} />
-            <div className="grid grid-cols-3 gap-3 mt-5 text-sm">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mt-5 text-sm">
               <Info label="Signe" value={r32.sign==="0"?"+ (positif)":"− (négatif)"} color="#ef4444" />
               <Info label="Exposant brut" value={`${r32.expVal} (${r32.exp}₂)`} color="#f59e0b" />
               <Info label="Exposant réel" value={r32.special||`${r32.expReal} (−biais 127)`} color="#f59e0b" />
@@ -122,7 +122,7 @@ export default function Ieee754Page() {
             </div>
             <Bits bits={r64.sign+r64.exp+r64.mant} colors={colors64}
               labels={[["Signe",1,"#ef4444"],["Exposant",11,"#f59e0b"],["Mantisse",52,"#7c3aed"]]} />
-            <div className="grid grid-cols-3 gap-3 mt-5 text-sm">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mt-5 text-sm">
               <Info label="Signe" value={r64.sign==="0"?"+ (positif)":"− (négatif)"} color="#ef4444" />
               <Info label="Exposant brut" value={`${r64.expVal}`} color="#f59e0b" />
               <Info label="Exposant réel" value={`${r64.expReal} (−biais 1023)`} color="#f59e0b" />

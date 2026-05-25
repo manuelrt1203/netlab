@@ -183,7 +183,7 @@ export default function TriPage() {
   const algoInfo = ALGOS.find(a=>a.id===algo)!;
 
   return (
-    <div className="max-w-4xl mx-auto px-6 py-10">
+    <div className="max-w-4xl mx-auto px-4 sm:px-6 py-8 sm:py-10">
       <h1 className="text-3xl font-bold text-[#ec4899] mb-2">📊 Visualisation des tris</h1>
       <p className="text-[#64748b] text-sm mb-5">Observez chaque comparaison et échange en temps réel.</p>
 

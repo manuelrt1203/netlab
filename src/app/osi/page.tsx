@@ -63,7 +63,7 @@ export default function OsiPage() {
   };
 
   return (
-    <div className="max-w-3xl mx-auto px-6 py-10">
+    <div className="max-w-3xl mx-auto px-4 sm:px-6 py-8 sm:py-10">
       <h1 className="text-3xl font-bold text-[#00d4ff] mb-2">📚 Modèle OSI</h1>
       <p className="text-[#64748b] text-sm mb-3">Cliquez une couche pour voir les détails. Le modèle OSI organise les protocoles réseau en 7 couches.</p>
 

@@ -21,7 +21,7 @@ export default function MathsPage() {
   const active = TABS.find(t => t.id === tab)!;
 
   return (
-    <div className="max-w-5xl mx-auto px-6 py-10">
+    <div className="max-w-5xl mx-auto px-4 sm:px-6 py-8 sm:py-10">
       <h1 className="text-3xl font-bold mb-1" style={{ color: active.color }}>
         Calculateur Mathématiques
       </h1>
