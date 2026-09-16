@@ -1,127 +1,153 @@
 "use client";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState } from "react";
-
-const CATEGORIES = [
-  {
-    label: "Réseaux",
-    color: "#00d4ff",
-    tools: [
-      { href:"/ip-geo",     icon:"🌐", label:"IP / Géo"  },
-      { href:"/monitoring", icon:"📡", label:"Monitoring" },
-      { href:"/cidr",       icon:"🔢", label:"CIDR"       },
-      { href:"/osi",        icon:"📚", label:"OSI"        },
-      { href:"/trames",     icon:"🔬", label:"Trames"     },
-    ],
-  },
-  {
-    label: "Systèmes",
-    color: "#22c55e",
-    tools: [
-      { href:"/ordonnancement", icon:"⏱", label:"Ordo CPU" },
-      { href:"/remplacement",   icon:"📄", label:"Pages"    },
-    ],
-  },
-  {
-    label: "Architecture",
-    color: "#f59e0b",
-    tools: [
-      { href:"/arm",     icon:"⚙️", label:"ARM"     },
-      { href:"/bases",   icon:"🔣", label:"Bases"   },
-      { href:"/ieee754", icon:"🔬", label:"IEEE 754" },
-      { href:"/circuits",icon:"⚡", label:"Circuits" },
-    ],
-  },
-  {
-    label: "Algorithmique",
-    color: "#7c3aed",
-    tools: [
-      { href:"/graphes",       icon:"🕸", label:"Graphes" },
-      { href:"/tri",           icon:"📊", label:"Tri"     },
-      { href:"/simulation-3d", icon:"🔷", label:"3D"      },
-    ],
-  },
-  {
-    label: "Télécoms",
-    color: "#ec4899",
-    tools: [
-      { href:"/telecoms", icon:"📶", label:"Télécoms" },
-    ],
-  },
-  {
-    label: "Sécurité",
-    color: "#ef4444",
-    tools: [
-      { href:"/crypto", icon:"🔐", label:"Crypto" },
-    ],
-  },
-  {
-    label: "Maths",
-    color: "#a78bfa",
-    tools: [
-      { href:"/maths", icon:"∑", label:"Calculateur" },
-    ],
-  },
-];
+import { useEffect, useRef, useState } from "react";
+import { CATEGORIES } from "@/lib/categories";
 
 export default function Navbar() {
   const pathname = usePathname();
-  const [open, setOpen] = useState(false);
+  const navRef = useRef<HTMLElement>(null);
+
+  const activeCategory = CATEGORIES.find((cat) =>
+    cat.tools.some((t) => pathname === t.href || pathname.startsWith(t.href + "/"))
+  );
+
+  const [openDomain, setOpenDomain] = useState<string | null>(null);
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const [mobileExpanded, setMobileExpanded] = useState<string | null>(null);
+
+  // Ferme les menus dès que la page change (rendu, pas d'effet — évite les cascades de re-render)
+  const [lastPathname, setLastPathname] = useState(pathname);
+  if (pathname !== lastPathname) {
+    setLastPathname(pathname);
+    setOpenDomain(null);
+    setMobileOpen(false);
+  }
+
+  // Clic en dehors / Échap → ferme le dropdown desktop
+  useEffect(() => {
+    if (!openDomain) return;
+    const onClickOutside = (e: MouseEvent) => {
+      if (navRef.current && !navRef.current.contains(e.target as Node)) setOpenDomain(null);
+    };
+    const onKey = (e: KeyboardEvent) => { if (e.key === "Escape") setOpenDomain(null); };
+    document.addEventListener("mousedown", onClickOutside);
+    document.addEventListener("keydown", onKey);
+    return () => {
+      document.removeEventListener("mousedown", onClickOutside);
+      document.removeEventListener("keydown", onKey);
+    };
+  }, [openDomain]);
+
+  const toggleMobile = () => {
+    setMobileOpen((o) => {
+      const next = !o;
+      if (next) setMobileExpanded(activeCategory?.label ?? null);
+      return next;
+    });
+  };
+
+  const openDomainData = CATEGORIES.find((c) => c.label === openDomain);
 
   return (
-    <nav className="glass sticky top-0 z-50 border-b border-[#2a2d3a]">
+    <nav ref={navRef} className="glass sticky top-0 z-50 border-b border-[#2a2d3a]">
       {/* Barre principale */}
-      <div className="px-4 py-2 flex items-center gap-4">
-        <Link href="/" className="text-[#00d4ff] font-bold text-base tracking-widest shrink-0" onClick={()=>setOpen(false)}>
+      <div className="px-4 py-2.5 flex items-center gap-1">
+        <Link href="/" className="text-[#00d4ff] font-bold text-base tracking-widest shrink-0 mr-3" onClick={() => setOpenDomain(null)}>
           NetLab
         </Link>
 
-        {/* Desktop: catégories inline */}
+        {/* Desktop : onglets par domaine */}
         <div className="hidden lg:flex items-center gap-1 flex-1 overflow-x-auto">
-          {CATEGORIES.map(cat=>(
-            <div key={cat.label} className="flex items-center gap-0.5 shrink-0">
-              <span className="text-[10px] text-[#2a2d3a] mx-1 font-bold tracking-wider uppercase">{cat.label}</span>
-              {cat.tools.map(t=>(
-                <Link key={t.href} href={t.href}
-                  className={`px-2 py-1 rounded text-xs transition-all whitespace-nowrap ${
-                    pathname===t.href||pathname.startsWith(t.href+"/")
-                      ? "text-white"
-                      : "text-[#64748b] hover:text-[#e2e8f0] hover:bg-white/5"
-                  }`}
-                  style={pathname===t.href||pathname.startsWith(t.href+"/")?{color:cat.color}:{}}>
-                  {t.icon} {t.label}
-                </Link>
-              ))}
-              <span className="text-[#2a2d3a] mx-1">|</span>
-            </div>
-          ))}
+          {CATEGORIES.map((cat) => {
+            const isActive = cat.label === activeCategory?.label;
+            const isOpen = cat.label === openDomain;
+            return (
+              <button
+                key={cat.label}
+                onClick={() => setOpenDomain((d) => (d === cat.label ? null : cat.label))}
+                aria-expanded={isOpen}
+                className="px-3 py-1.5 rounded-lg text-xs font-medium whitespace-nowrap transition-all flex items-center gap-1 cursor-pointer border-b-2"
+                style={
+                  isOpen
+                    ? { color: cat.color, background: `${cat.color}18`, borderBottomColor: "transparent" }
+                    : isActive
+                      ? { color: cat.color, borderBottomColor: cat.color }
+                      : { color: "#64748b", borderBottomColor: "transparent" }
+                }
+              >
+                {cat.label}
+                <span className="text-[9px] opacity-60">{isOpen ? "▴" : "▾"}</span>
+              </button>
+            );
+          })}
         </div>
 
-        {/* Mobile: hamburger */}
-        <button onClick={()=>setOpen(o=>!o)}
-          className="lg:hidden ml-auto text-[#64748b] hover:text-white text-xl px-2">
-          {open?"✕":"☰"}
+        {/* Mobile : hamburger */}
+        <button onClick={toggleMobile} aria-expanded={mobileOpen}
+          className="lg:hidden ml-auto text-[#64748b] hover:text-white text-xl px-2 cursor-pointer">
+          {mobileOpen ? "✕" : "☰"}
         </button>
       </div>
 
-      {/* Mobile menu */}
-      {open && (
-        <div className="lg:hidden border-t border-[#2a2d3a] px-4 py-3 grid grid-cols-2 gap-1">
-          {CATEGORIES.map(cat=>(
-            <div key={cat.label}>
-              <p className="text-[9px] text-[#64748b] font-bold uppercase tracking-wider mb-1 mt-2">{cat.label}</p>
-              {cat.tools.map(t=>(
-                <Link key={t.href} href={t.href} onClick={()=>setOpen(false)}
-                  className={`block px-2 py-1 rounded text-xs mb-0.5 transition-all ${
-                    pathname===t.href?"font-medium":"text-[#64748b] hover:text-white hover:bg-white/5"
-                  }`}
-                  style={pathname===t.href?{color:cat.color}:{}}>
-                  {t.icon} {t.label}
+      {/* Desktop : panneau du domaine ouvert (mega-menu) */}
+      {openDomainData && (
+        <div className="hidden lg:block border-t border-[#2a2d3a] px-4 py-4">
+          <div className="grid grid-cols-2 xl:grid-cols-4 gap-2 max-w-6xl">
+            {openDomainData.tools.map((t) => {
+              const isCurrent = pathname === t.href || pathname.startsWith(t.href + "/");
+              return (
+                <Link key={t.href} href={t.href} onClick={() => setOpenDomain(null)}
+                  className="flex items-start gap-2 px-3 py-2 rounded-lg border transition-all"
+                  style={isCurrent
+                    ? { borderColor: openDomainData.color, background: `${openDomainData.color}12` }
+                    : { borderColor: "#2a2d3a" }}>
+                  <span className="text-base leading-none mt-0.5">{t.icon}</span>
+                  <span className="min-w-0">
+                    <span className="block text-xs font-semibold" style={{ color: isCurrent ? openDomainData.color : "#e2e8f0" }}>{t.label}</span>
+                    <span className="block text-[10px] text-[#64748b] leading-[14px] mt-0.5">{t.desc}</span>
+                  </span>
                 </Link>
-              ))}
-            </div>
-          ))}
+              );
+            })}
+          </div>
+        </div>
+      )}
+
+      {/* Mobile : accordéon */}
+      {mobileOpen && (
+        <div className="lg:hidden border-t border-[#2a2d3a] px-2 py-2 max-h-[75vh] overflow-y-auto">
+          {CATEGORIES.map((cat) => {
+            const isActive = cat.label === activeCategory?.label;
+            const isExpanded = cat.label === mobileExpanded;
+            return (
+              <div key={cat.label} className="mb-1">
+                <button
+                  onClick={() => setMobileExpanded((d) => (d === cat.label ? null : cat.label))}
+                  aria-expanded={isExpanded}
+                  className="w-full flex items-center justify-between px-3 py-2.5 rounded-lg text-left transition-all cursor-pointer"
+                  style={isActive ? { color: cat.color, background: `${cat.color}0f` } : { color: "#94a3b8" }}>
+                  <span className="text-xs font-bold uppercase tracking-wider">{cat.label}</span>
+                  <span className="text-[10px] opacity-60">{isExpanded ? "▴" : "▾"}</span>
+                </button>
+                {isExpanded && (
+                  <div className="pl-2 pb-1">
+                    {cat.tools.map((t) => {
+                      const isCurrent = pathname === t.href || pathname.startsWith(t.href + "/");
+                      return (
+                        <Link key={t.href} href={t.href} onClick={() => setMobileOpen(false)}
+                          className="flex items-center gap-2 px-3 py-2 rounded-lg text-xs transition-all"
+                          style={isCurrent ? { color: cat.color, background: `${cat.color}12` } : { color: "#64748b" }}>
+                          <span>{t.icon}</span>
+                          <span>{t.label}</span>
+                        </Link>
+                      );
+                    })}
+                  </div>
+                )}
+              </div>
+            );
+          })}
         </div>
       )}
     </nav>

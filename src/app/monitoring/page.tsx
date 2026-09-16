@@ -65,6 +65,9 @@ export default function MonitoringPage() {
             </button>
           ))}
         </div>
+        <p className="text-[10px] text-[#64748b] mt-3 leading-4">
+          Sur l&apos;hébergement en production, l&apos;ICMP brut n&apos;est pas disponible (limitation des fonctions serverless) : le ping bascule automatiquement sur une mesure par connexion TCP, et le traceroute peut être indisponible — ces deux outils donnent leur résultat complet en local (<code>npm run dev</code>).
+        </p>
       </div>
 
       {(output || loading) && (

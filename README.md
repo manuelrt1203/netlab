@@ -16,6 +16,9 @@ Suite d'outils interactifs pour la formation en informatique — 100% client, au
 | Calcul CIDR | Sous-réseaux, masques, plages d'adresses |
 | Modèle OSI | 7 couches, protocoles associés, encapsulation |
 | Analyseur de trames | Décodage Ethernet · ARP · IPv4 · ICMP · TCP · UDP style Wireshark |
+| Codage en ligne | NRZ, RZ, Manchester, Manchester différentiel, Miller, bipolaire (AMI) + diagramme de l'œil |
+| Spanning Tree Protocol | Éditeur de topologie de switches, élection du root bridge, root/designated/blocked ports |
+| Sélection BGP | Comparateur de chemins pas à pas (Weight, Local Pref, AS-Path, Origine, MED, eBGP/iBGP, Router ID) |
 
 ### Systèmes d'exploitation
 | Outil | Description |
@@ -31,7 +34,7 @@ Suite d'outils interactifs pour la formation en informatique — 100% client, au
 | IEEE 754 | Décomposition virgule flottante 32/64 bits, bits colorés |
 | Circuits logiques | Expression booléenne → table de vérité + FND |
 
-### Algorithmique
+### Programmation
 | Outil | Description |
 |---|---|
 | Graphes & Dijkstra | Éditeur de graphe, plus court chemin animé |
@@ -42,11 +45,17 @@ Suite d'outils interactifs pour la formation en informatique — 100% client, au
 | Outil | Description |
 |---|---|
 | Calculateurs Télécoms | Théorème de Shannon, débit, atténuation, modulation QAM, bilan de liaison |
+| Fibre optique | Bilan de liaison optique (budget, marge) + simulateur de trace OTDR (réflectométrie) |
 
 ### Sécurité / Cryptographie
 | Outil | Description |
 |---|---|
 | Cryptographie classique | César, Vigenère, XOR, analyse fréquentielle |
+
+### Bases de données
+| Outil | Description |
+|---|---|
+| Bases de données | Algèbre relationnelle (σ, π, ⋈) interactive + normalisation 1FN/2FN/3FN pas à pas à partir de dépendances fonctionnelles |
 
 ### Mathématiques
 | Outil | Description |
@@ -87,9 +96,14 @@ src/
 │   ├── maths/            # Calculateur mathématiques
 │   ├── graphes/          # Graphes & Dijkstra
 │   ├── arm/              # Simulation ARM
-│   └── ...               # 16 outils au total
-└── components/
-    ├── Navbar.tsx
-    ├── maths/            # FonctionsTab, MatricesTab, SuitesTab, IntegraesTab
-    └── trames/           # TrameAnalyzer
+│   ├── spanning-tree/    # STP — root bridge, root/designated ports
+│   ├── bgp/              # Sélection du meilleur chemin BGP
+│   ├── bdd/              # Algèbre relationnelle & normalisation
+│   └── ...               # 22 outils au total
+├── components/
+│   ├── Navbar.tsx        # Navigation par onglets de domaine (menu déroulant)
+│   ├── maths/            # FonctionsTab, MatricesTab, SuitesTab, IntegraesTab
+│   └── trames/           # TrameAnalyzer
+└── lib/
+    └── categories.ts     # Source unique des domaines/outils (page d'accueil + navbar)
 ```
