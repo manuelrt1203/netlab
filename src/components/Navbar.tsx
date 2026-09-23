@@ -3,6 +3,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { CATEGORIES } from "@/lib/categories";
+import YearBadge from "@/components/YearBadge";
 
 export default function Navbar() {
   const pathname = usePathname();
@@ -104,7 +105,10 @@ export default function Navbar() {
                     : { borderColor: "#2a2d3a" }}>
                   <span className="text-base leading-none mt-0.5">{t.icon}</span>
                   <span className="min-w-0">
-                    <span className="block text-xs font-semibold" style={{ color: isCurrent ? openDomainData.color : "#e2e8f0" }}>{t.label}</span>
+                    <span className="flex items-center gap-1.5 flex-wrap">
+                      <span className="text-xs font-semibold" style={{ color: isCurrent ? openDomainData.color : "#e2e8f0" }}>{t.label}</span>
+                      <YearBadge tool={t} />
+                    </span>
                     <span className="block text-[10px] text-[#64748b] leading-[14px] mt-0.5">{t.desc}</span>
                   </span>
                 </Link>
@@ -140,6 +144,7 @@ export default function Navbar() {
                           style={isCurrent ? { color: cat.color, background: `${cat.color}12` } : { color: "#64748b" }}>
                           <span>{t.icon}</span>
                           <span>{t.label}</span>
+                          <span className="ml-auto"><YearBadge tool={t} compact /></span>
                         </Link>
                       );
                     })}

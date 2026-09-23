@@ -268,15 +268,146 @@ function OTDR() {
   );
 }
 
+/* ─── Snell-Descartes ───────────────────────────────────────────────── */
+const DEG = Math.PI / 180;
+
+function SnellDescartes() {
+  const [n1, setN1] = useState("1");
+  const [n2, setN2] = useState("1.49");
+  const [i1, setI1] = useState("45");
+
+  const a = parseFloat(i1) * DEG, N1 = parseFloat(n1), N2 = parseFloat(n2);
+  const s = (N1 / N2) * Math.sin(a);
+  const totale = s > 1;
+  const i2 = totale ? NaN : Math.asin(s);
+  const critique = N1 > N2 ? Math.asin(N2 / N1) : NaN;
+
+  // Schéma : dioptre horizontal au centre, rayon incident depuis le haut-gauche
+  const W = 300, H = 200, cx = W / 2, cy = H / 2, R = 85;
+  const pIn = { x: cx - R * Math.sin(a), y: cy - R * Math.cos(a) };
+  const pRefl = { x: cx + R * Math.sin(a), y: cy - R * Math.cos(a) };
+  const pOut = { x: cx + R * Math.sin(i2), y: cy + R * Math.cos(i2) };
+
+  return (
+    <Card
+      color="#22c55e"
+      title="Réfraction — loi de Snell-Descartes"
+      formula="n₁·sin(i₁) = n₂·sin(i₂)   angle limite : sin(iL) = n₂/n₁"
+      explainer={
+        <>
+          <p>À l&apos;interface entre deux milieux, un rayon est en partie réfléchi (même angle) et en partie réfracté. Plus l&apos;indice est grand, plus la lumière est lente (v = c/n) et plus le rayon se rapproche de la normale.</p>
+          <p className="mt-1">Quand on passe d&apos;un milieu plus réfringent à un milieu moins réfringent (n₁ &gt; n₂), il existe un <strong>angle limite</strong> iL au-delà duquel il n&apos;y a plus de rayon réfracté : c&apos;est la <strong>réflexion totale</strong>, le principe qui guide la lumière dans le cœur d&apos;une fibre.</p>
+        </>
+      }
+    >
+      <div className="grid sm:grid-cols-2 gap-4 items-center">
+        <div className="space-y-3">
+          <div className="grid grid-cols-3 gap-2">
+            <Field label="n₁ (incident)" unit="" value={n1} onChange={setN1} />
+            <Field label="n₂" unit="" value={n2} onChange={setN2} />
+            <Field label="Angle i₁" unit="°" value={i1} onChange={setI1} />
+          </div>
+          <Divider />
+          <Result label="Angle réfléchi" value={`${parseFloat(i1).toFixed(2)}°`} />
+          <Result label="Angle réfracté i₂" value={totale ? "— (réflexion totale)" : `${(i2 / DEG).toFixed(2)}°`} accent />
+          <Result label="Angle limite iL" value={isNaN(critique) ? "aucun (n₁ ≤ n₂)" : `${(critique / DEG).toFixed(2)}°`} />
+          <Result label="Vitesse dans le milieu 2" value={`${(299792.458 / N2).toFixed(0)} km/s`} />
+          <Hint>{totale ? "✓ Réflexion totale : toute la lumière reste dans le milieu 1." : N1 < N2 ? "Le rayon se rapproche de la normale (milieu 2 plus réfringent)." : "Le rayon s'écarte de la normale."}</Hint>
+        </div>
+        <svg viewBox={`0 0 ${W} ${H}`} className="w-full bg-[#0f1117] rounded-lg">
+          <rect x={0} y={cy} width={W} height={H / 2} fill="#00d4ff" opacity={0.07} />
+          <line x1={0} y1={cy} x2={W} y2={cy} stroke="#475569" />
+          <line x1={cx} y1={10} x2={cx} y2={H - 10} stroke="#475569" strokeDasharray="3 3" />
+          <text x={6} y={cy - 6} fontSize={10} fill="#64748b">n₁ = {n1}</text>
+          <text x={6} y={cy + 14} fontSize={10} fill="#64748b">n₂ = {n2}</text>
+          <line x1={pIn.x} y1={pIn.y} x2={cx} y2={cy} stroke="#f59e0b" strokeWidth={2.5} />
+          <line x1={cx} y1={cy} x2={pRefl.x} y2={pRefl.y} stroke="#f59e0b" strokeWidth={totale ? 2.5 : 1.2} opacity={totale ? 1 : 0.5} />
+          {!totale && <line x1={cx} y1={cy} x2={pOut.x} y2={pOut.y} stroke="#22c55e" strokeWidth={2.5} />}
+          <text x={pIn.x} y={pIn.y - 4} fontSize={10} fill="#f59e0b">incident</text>
+          {!totale && <text x={pOut.x - 20} y={Math.min(pOut.y + 12, H - 4)} fontSize={10} fill="#22c55e">réfracté</text>}
+        </svg>
+      </div>
+    </Card>
+  );
+}
+
+/* ─── Ouverture numérique, modes, dispersion ─────────────────────────── */
+function ModesFibre() {
+  const [nc, setNc] = useState("1.5");
+  const [ng, setNg] = useState("1.495");
+  const [d, setD] = useState("9");
+  const [lambda, setLambda] = useState("1.31");
+  const [n0, setN0] = useState("1");
+  const [gradient, setGradient] = useState(false);
+
+  const Nc = parseFloat(nc), Ng = parseFloat(ng), a = parseFloat(d) / 2, lam = parseFloat(lambda), N0 = parseFloat(n0);
+  const ON = Math.sqrt(Nc * Nc - Ng * Ng);
+  const delta = (Nc * Nc - Ng * Ng) / (2 * Nc * Nc);
+  const thetaA = ON / N0 <= 1 ? Math.asin(ON / N0) / DEG : 90;
+  const iL = Math.asin(Ng / Nc) / DEG;
+  const V = (2 * Math.PI * a * ON) / lam;
+  const mono = V < 2.405;
+  const modes = mono ? 1 : Math.round((V * V) / (gradient ? 4 : 2));
+  const lambdaC = (2 * Math.PI * a * ON) / 2.405;
+  // Dispersion intermodale (ns/km) : saut d'indice n₁Δ/c, gradient n₁Δ²/(8c)
+  const dtau = mono ? 0 : ((gradient ? (Nc * delta * delta) / 8 : Nc * delta) / 299792458) * 1e3 * 1e9;
+  const bl = dtau > 0 ? 1 / (2 * dtau * 1e-9) : Infinity;
+
+  return (
+    <Card
+      color="#f59e0b"
+      title="Ouverture numérique, modes & dispersion"
+      formula="ON = √(nc² − ng²) = n₀·sin(θa)   V = 2πa·ON / λ   monomode si V < 2,405"
+      explainer={
+        <>
+          <p>L&apos;<strong>ouverture numérique</strong> ON mesure la capacité de la fibre à accepter la lumière : seuls les rayons entrant avec un angle inférieur à l&apos;<strong>angle d&apos;acceptance</strong> θa sont guidés par réflexion totale. Elle ne dépend que des indices de cœur et de gaine, pas du milieu extérieur n₀ (seul θa en dépend).</p>
+          <p className="mt-1">La <strong>fréquence normalisée</strong> V détermine le nombre de modes. Si V &lt; 2,405, un seul mode se propage (fibre <strong>monomode</strong>). Sinon, le nombre de modes vaut environ V²/2 (saut d&apos;indice) ou V²/4 (gradient d&apos;indice).</p>
+          <p className="mt-1">En multimode, les rayons n&apos;ont pas tous le même trajet : l&apos;impulsion s&apos;étale (<strong>dispersion intermodale</strong>), ce qui limite le produit débit × distance. La fibre à gradient d&apos;indice réduit fortement cet effet.</p>
+        </>
+      }
+    >
+      <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+        <Field label="Indice de cœur nc" unit="" value={nc} onChange={setNc} />
+        <Field label="Indice de gaine ng" unit="" value={ng} onChange={setNg} />
+        <Field label="Diamètre de cœur 2a" unit="µm" value={d} onChange={setD} hint="9 µm monomode, 50 ou 62,5 µm multimode" />
+        <Field label="Longueur d'onde λ" unit="µm" value={lambda} onChange={setLambda} hint="0,85 / 1,31 / 1,55 µm" />
+        <Field label="Indice extérieur n₀" unit="" value={n0} onChange={setN0} hint="1 pour l'air" />
+        <label className="flex items-center gap-2 text-xs text-[#94a3b8] cursor-pointer self-center">
+          <input type="checkbox" checked={gradient} onChange={(e) => setGradient(e.target.checked)} /> Fibre à gradient d&apos;indice
+        </label>
+      </div>
+      <Divider />
+      <Result label="Ouverture numérique ON" value={ON.toFixed(4)} accent />
+      <Result label="Angle d'acceptance θa" value={`${thetaA.toFixed(2)}°  (cône total ${(2 * thetaA).toFixed(2)}°)`} />
+      <Result label="Angle limite cœur/gaine" value={`${iL.toFixed(2)}°`} />
+      <Result label="Différence d'indice relative Δ" value={`${(delta * 100).toFixed(3)} %`} />
+      <Divider />
+      <Result label="Fréquence normalisée V" value={V.toFixed(3)} accent />
+      <Result label="Régime" value={mono ? "Monomode" : `Multimode (≈ ${modes} modes)`} accent />
+      <Result label="Longueur d'onde de coupure λc" value={`${lambdaC.toFixed(3)} µm`} />
+      <Hint>{mono ? `La fibre est monomode pour toute λ > ${lambdaC.toFixed(3)} µm.` : `Il faudrait λ > ${lambdaC.toFixed(3)} µm (ou un cœur plus fin) pour être monomode.`}</Hint>
+      {!mono && (
+        <>
+          <Divider />
+          <Result label="Dispersion intermodale Δτ" value={`${dtau.toFixed(2)} ns/km`} />
+          <Result label="Produit bande × distance ≈ 1/(2Δτ)" value={`${(bl / 1e6).toFixed(1)} Mbit/s·km`} />
+        </>
+      )}
+    </Card>
+  );
+}
+
 /* ─── Page ──────────────────────────────────────────────────────────── */
 export default function FibreOptiquePage() {
   return (
     <div className="max-w-5xl mx-auto px-4 sm:px-6 py-8 sm:py-10">
       <h1 className="text-3xl font-bold text-[#00d4ff] mb-2">🔦 Fibre optique</h1>
       <p className="text-[#64748b] text-sm mb-8">
-        Bilan de liaison et réflectométrie — cliquez <strong>&ldquo;C&apos;est quoi ?&rdquo;</strong> sur chaque outil pour comprendre à quoi il sert.
+        Optique géométrique, modes de propagation, bilan de liaison et réflectométrie — cliquez <strong>&ldquo;C&apos;est quoi ?&rdquo;</strong> sur chaque outil pour comprendre à quoi il sert.
       </p>
       <div className="space-y-5">
+        <SnellDescartes />
+        <ModesFibre />
         <BilanOptique />
         <OTDR />
       </div>

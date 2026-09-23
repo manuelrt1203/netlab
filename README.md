@@ -1,6 +1,8 @@
 # NetLab
 
-Suite d'outils interactifs pour la formation en informatique — 100% client, aucune inscription.
+Suite d'outils interactifs pour le BUT Réseaux & Télécommunications — 100% client, aucune inscription.
+
+Chaque outil porte une pastille **BUT1** / **BUT2** et, quand elle est identifiée, la ressource du programme (ex. `R113`). La page d'accueil peut être filtrée par année.
 
 **[netlab-xi.vercel.app](https://netlab-xi.vercel.app)**
 
@@ -16,15 +18,8 @@ Suite d'outils interactifs pour la formation en informatique — 100% client, au
 | Calcul CIDR | Sous-réseaux, masques, plages d'adresses |
 | Modèle OSI | 7 couches, protocoles associés, encapsulation |
 | Analyseur de trames | Décodage Ethernet · ARP · IPv4 · ICMP · TCP · UDP style Wireshark |
-| Codage en ligne | NRZ, RZ, Manchester, Manchester différentiel, Miller, bipolaire (AMI) + diagramme de l'œil |
 | Spanning Tree Protocol | Éditeur de topologie de switches, élection du root bridge, root/designated/blocked ports |
 | Sélection BGP | Comparateur de chemins pas à pas (Weight, Local Pref, AS-Path, Origine, MED, eBGP/iBGP, Router ID) |
-
-### Systèmes d'exploitation
-| Outil | Description |
-|---|---|
-| Ordonnancement CPU | FIFO, SJF, SRTF, Round Robin, Priorité — diagramme de Gantt animé |
-| Remplacement de pages | FIFO, LRU, Optimal — compteur de défauts de page |
 
 ### Architecture & Bas niveau
 | Outil | Description |
@@ -37,20 +32,22 @@ Suite d'outils interactifs pour la formation en informatique — 100% client, au
 ### Programmation
 | Outil | Description |
 |---|---|
-| Graphes & Dijkstra | Éditeur de graphe, plus court chemin animé |
+| Graphes & Dijkstra (BUT1 · R201 · R301) | Éditeur de graphe, plus court chemin animé |
 | Visualisation des tris | Bulles, insertion, fusion, rapide — animé |
-| Simulation 3D | Figures géométriques 3D, sommets éditables, rotation |
 
-### Télécommunications
-| Outil | Description |
-|---|---|
-| Calculateurs Télécoms | Théorème de Shannon, débit, atténuation, modulation QAM, bilan de liaison |
-| Fibre optique | Bilan de liaison optique (budget, marge) + simulateur de trace OTDR (réflectométrie) |
+### Télécoms & Transmission
+| Outil | Année | Description |
+|---|---|---|
+| Supports de transmission | BUT1 · R105 | Convertisseur dBm/dBW/dBµV, atténuation d'un câble, vitesse de propagation, impédance caractéristique Z₀, coefficient de réflexion et ROS, onde EM plane |
+| Codage en ligne | BUT2 · R305 | NRZ, RZ, Manchester, Manchester différentiel, Miller, bipolaire (AMI) + diagramme de l'œil |
+| Fibre optique | BUT2 · R306 | Snell-Descartes, ouverture numérique, fréquence normalisée V, mono/multimode, dispersion intermodale, bilan de liaison, trace OTDR |
 
-### Sécurité / Cryptographie
-| Outil | Description |
-|---|---|
-| Cryptographie classique | César, Vigenère, XOR, analyse fréquentielle |
+### Signal & Électronique
+| Outil | Année | Description |
+|---|---|---|
+| Signaux périodiques | BUT1 · R113 | Générateur sinus/carré/triangle/scie, somme de signaux, valeurs moyenne et efficace, déphasage, vecteurs de Fresnel |
+| Électronique & filtres | BUT1 · R104 · R205 | Impédances R/L/C en série/parallèle, filtres RC/RL/RLC, dérivateur/intégrateur, diagramme de Bode réel + asymptotique |
+| Séries de Fourier | BUT2 · R314 | Reconstruction harmonique par harmonique, spectre d'amplitude, tableau des coefficients, Parseval |
 
 ### Bases de données
 | Outil | Description |
@@ -60,10 +57,22 @@ Suite d'outils interactifs pour la formation en informatique — 100% client, au
 ### Mathématiques
 | Outil | Description |
 |---|---|
+| Nombres complexes (BUT1 · R114) | Formes algébrique/trigonométrique/exponentielle, opérations, plan complexe, impédances |
 | Fonctions & Dérivées | Tracé, dérivée symbolique, tangente, tableau de variation, racines, primitive — analyse automatique |
 | Intégrales | Méthodes numériques (rectangles, trapèzes, Simpson) avec visualisation |
 | Suites | Arithmétiques, géométriques, récurrence, Fibonacci |
 | Matrices | Déterminant, inverse, élimination de Gauss-Jordan pas à pas |
+
+### Autres outils
+Outils qui ne sont rattachés à aucun module identifié du programme (pas de pastille d'année).
+
+| Outil | Description |
+|---|---|
+| Calculateurs Télécoms | Théorème de Shannon, débit, atténuation, modulation QAM, bilan de liaison |
+| Ordonnancement CPU | FIFO, SJF, SRTF, Round Robin, Priorité — diagramme de Gantt animé |
+| Remplacement de pages | FIFO, LRU, Optimal — compteur de défauts de page |
+| Cryptographie classique | César, Vigenère, XOR, analyse fréquentielle |
+| Simulation 3D | Figures géométriques 3D, sommets éditables, rotation |
 
 ---
 
