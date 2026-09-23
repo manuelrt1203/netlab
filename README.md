@@ -18,6 +18,9 @@ Chaque outil porte une pastille **BUT1** / **BUT2** et, quand elle est identifi�
 | Calcul CIDR | Sous-réseaux, masques, plages d'adresses |
 | Modèle OSI | 7 couches, protocoles associés, encapsulation |
 | Analyseur de trames | Décodage Ethernet · ARP · IPv4 · ICMP · TCP · UDP style Wireshark |
+| VLSM & IPv6 (BUT1 · R102 · R201) | Plan d'adressage à masque variable ; compression IPv6, types d'adresses, préfixe, EUI-64 |
+| Routage IP (BUT1 · R201 · R301) | Table de routage éditable : préfixe le plus long, distance administrative, métrique ; coût OSPF |
+| Services réseau (BUT1 · R203) | DHCP (DORA), ARP, DNS récursif/itératif, TCP (handshake, fermeture) en diagramme de séquence ; ports connus |
 | Spanning Tree Protocol | Éditeur de topologie de switches, élection du root bridge, root/designated/blocked ports |
 | Sélection BGP | Comparateur de chemins pas à pas (Weight, Local Pref, AS-Path, Origine, MED, eBGP/iBGP, Router ID) |
 
@@ -39,6 +42,7 @@ Chaque outil porte une pastille **BUT1** / **BUT2** et, quand elle est identifi�
 | Outil | Année | Description |
 |---|---|---|
 | Supports de transmission | BUT1 · R105 | Convertisseur dBm/dBW/dBµV, atténuation d'un câble, vitesse de propagation, impédance caractéristique Z₀, coefficient de réflexion et ROS, onde EM plane |
+| Codes correcteurs | BUT2 · R305 | Parité, CRC avec division polynomiale pas à pas, Hamming (7,4) avec syndrome, distance de Hamming — erreurs injectables au clic |
 | Codage en ligne | BUT2 · R305 | NRZ, RZ, Manchester, Manchester différentiel, Miller, bipolaire (AMI) + diagramme de l'œil |
 | Fibre optique | BUT2 · R306 | Snell-Descartes, ouverture numérique, fréquence normalisée V, mono/multimode, dispersion intermodale, bilan de liaison, trace OTDR |
 
@@ -46,6 +50,7 @@ Chaque outil porte une pastille **BUT1** / **BUT2** et, quand elle est identifi�
 | Outil | Année | Description |
 |---|---|---|
 | Signaux périodiques | BUT1 · R113 | Générateur sinus/carré/triangle/scie, somme de signaux, valeurs moyenne et efficace, déphasage, vecteurs de Fresnel |
+| Échantillonnage & numérisation | BUT1 · R206 | Shannon-Nyquist, repliement de spectre, quantification (CAN), débit PCM |
 | Électronique & filtres | BUT1 · R104 · R205 | Impédances R/L/C en série/parallèle, filtres RC/RL/RLC, dérivateur/intégrateur, diagramme de Bode réel + asymptotique |
 | Séries de Fourier | BUT2 · R314 | Reconstruction harmonique par harmonique, spectre d'amplitude, tableau des coefficients, Parseval |
 
@@ -63,7 +68,7 @@ Chaque outil porte une pastille **BUT1** / **BUT2** et, quand elle est identifi�
 | Suites | Arithmétiques, géométriques, récurrence, Fibonacci |
 | Matrices | Déterminant, inverse, élimination de Gauss-Jordan pas à pas |
 
-### Autres outils
+### Autres
 Outils qui ne sont rattachés à aucun module identifié du programme (pas de pastille d'année).
 
 | Outil | Description |

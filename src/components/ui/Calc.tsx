@@ -29,13 +29,15 @@ export function Card({ color, title, formula, explainer, children }: {
   );
 }
 
-export function Field({ label, unit, value, onChange, hint, step }: {
+export function Field({ label, unit, value, onChange, hint, step, text }: {
   label: string; unit?: string; value: string; onChange: (v: string) => void; hint?: string; step?: string;
+  /** Saisie libre (adresse IP, MAC…) au lieu d'un nombre */
+  text?: boolean;
 }) {
   return (
     <div>
       <label className="text-xs text-[#64748b] mb-1 block">{label} {unit && <span className="text-[#475569]">({unit})</span>}</label>
-      <input type="number" value={value} step={step ?? "any"} onChange={(e) => onChange(e.target.value)}
+      <input type={text ? "text" : "number"} value={value} step={text ? undefined : step ?? "any"} spellCheck={false} onChange={(e) => onChange(e.target.value)}
         className="w-full bg-[#0f1117] border border-[#2a2d3a] px-3 py-2 rounded-lg text-sm font-mono outline-none focus:border-[#00d4ff] transition-colors" />
       {hint && <p className="text-[#64748b] text-[10px] mt-1 leading-3">{hint}</p>}
     </div>
@@ -90,7 +92,7 @@ export function Tabs<T extends string>({ tabs, value, onChange }: {
   tabs: { id: T; icon: string; label: string; desc: string; color: string }[]; value: T; onChange: (v: T) => void;
 }) {
   return (
-    <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 mb-7">
+    <div className={`grid grid-cols-2 ${tabs.length >= 5 ? "sm:grid-cols-5" : tabs.length === 4 ? "sm:grid-cols-4" : "sm:grid-cols-3"} gap-2 mb-7`}>
       {tabs.map((t) => (
         <button key={t.id} onClick={() => onChange(t.id)}
           className="p-3 rounded-xl border text-left transition-all"

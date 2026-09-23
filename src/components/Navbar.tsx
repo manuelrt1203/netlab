@@ -59,7 +59,7 @@ export default function Navbar() {
         </Link>
 
         {/* Desktop : onglets par domaine */}
-        <div className="hidden lg:flex items-center gap-1 flex-1 overflow-x-auto">
+        <div className="hidden lg:flex items-center gap-0.5 flex-1 overflow-x-auto">
           {CATEGORIES.map((cat) => {
             const isActive = cat.label === activeCategory?.label;
             const isOpen = cat.label === openDomain;
@@ -68,7 +68,7 @@ export default function Navbar() {
                 key={cat.label}
                 onClick={() => setOpenDomain((d) => (d === cat.label ? null : cat.label))}
                 aria-expanded={isOpen}
-                className="px-3 py-1.5 rounded-lg text-xs font-medium whitespace-nowrap transition-all flex items-center gap-1 cursor-pointer border-b-2"
+                className="px-2 py-1.5 rounded-lg text-xs font-medium whitespace-nowrap transition-all flex items-center gap-1 cursor-pointer border-b-2"
                 style={
                   isOpen
                     ? { color: cat.color, background: `${cat.color}18`, borderBottomColor: "transparent" }

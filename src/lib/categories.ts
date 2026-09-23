@@ -30,8 +30,11 @@ export const CATEGORIES: Category[] = [
       { href: "/ip-geo",        icon: "🌐", label: "IP / Géolocalisation",   desc: "Lookup d'IP, carte, ASN, FAI",                               annee: 1, module: "R101" },
       { href: "/monitoring",    icon: "📡", label: "Monitoring réseau",      desc: "Ping, traceroute, latence",                                  annee: 1, module: "R101" },
       { href: "/cidr",          icon: "🔢", label: "Calcul CIDR",            desc: "Sous-réseaux, masques, plages",                              annee: 1, module: "R102" },
+      { href: "/vlsm-ipv6",     icon: "🧩", label: "VLSM & IPv6",            desc: "Plan d'adressage à masque variable, compression IPv6, EUI-64", annee: 1, module: "R102 · R201" },
       { href: "/osi",           icon: "📚", label: "Modèle OSI",             desc: "7 couches, protocoles, encapsulation",                       annee: 1, module: "R102" },
       { href: "/trames",        icon: "🔬", label: "Analyseur de trames",    desc: "Ethernet, ARP, IPv4, TCP, UDP, ICMP — style Wireshark",      annee: 1, module: "R102" },
+      { href: "/routage",       icon: "🧭", label: "Routage IP",             desc: "Préfixe le plus long, distance administrative, coût OSPF",   annee: 1, module: "R201 · R301" },
+      { href: "/services-reseau", icon: "🛎", label: "Services réseau",      desc: "DHCP, ARP, DNS, TCP message par message + ports connus",     annee: 1, module: "R203" },
       { href: "/spanning-tree", icon: "🌳", label: "Spanning Tree Protocol", desc: "Root bridge, root/designated ports, blocage des boucles",     annee: 2, module: "R301" },
       { href: "/bgp",           icon: "🌍", label: "Sélection BGP",          desc: "Weight, Local Pref, AS-Path, MED — meilleur chemin pas à pas", annee: 2, module: "R302" },
     ],
@@ -41,6 +44,7 @@ export const CATEGORIES: Category[] = [
     color: "#ec4899",
     tools: [
       { href: "/supports-transmission", icon: "🔌", label: "Supports de transmission", desc: "dBm/dBµV, atténuation des câbles, propagation, Z₀, réflexion", annee: 1, module: "R105" },
+      { href: "/codes-correcteurs",     icon: "🛡", label: "Codes correcteurs",        desc: "Parité, CRC pas à pas, Hamming (7,4), distance de Hamming",   annee: 2, module: "R305" },
       { href: "/codage-ligne",          icon: "🔡", label: "Codage en ligne",          desc: "NRZ, RZ, Manchester, Miller, AMI + diagramme de l'œil",       annee: 2, module: "R305" },
       { href: "/fibre-optique",         icon: "🔦", label: "Fibre optique",            desc: "Snell-Descartes, ouverture numérique, modes, bilan, OTDR",      annee: 2, module: "R306" },
     ],
@@ -50,6 +54,7 @@ export const CATEGORIES: Category[] = [
     color: "#06b6d4",
     tools: [
       { href: "/signaux", icon: "〰️", label: "Signaux périodiques",   desc: "Générateur sinus/carré/triangle, somme, déphasage, Fresnel", annee: 1, module: "R113" },
+      { href: "/echantillonnage", icon: "📶", label: "Échantillonnage", desc: "Shannon-Nyquist, repliement, quantification, débit PCM", annee: 1, module: "R206" },
       { href: "/filtres", icon: "🎛", label: "Électronique & filtres", desc: "Impédances R/L/C, filtres RC/RL/RLC, diagramme de Bode",       annee: 1, module: "R104 · R205" },
       { href: "/fourier", icon: "🎼", label: "Séries de Fourier",      desc: "Reconstruction harmonique par harmonique, spectre, Parseval", annee: 2, module: "R314" },
     ],
@@ -88,7 +93,7 @@ export const CATEGORIES: Category[] = [
     ],
   },
   {
-    label: "Autres outils",
+    label: "Autres",
     color: "#94a3b8",
     tools: [
       { href: "/telecoms",       icon: "📶", label: "Calculateurs Télécoms",   desc: "Shannon, débit, atténuation, modulation QAM, bilan liaison" },
