@@ -2,82 +2,86 @@
 
 Suite d'outils interactifs pour le BUT Réseaux & Télécommunications — 100% client, aucune inscription.
 
-Chaque outil porte une pastille **BUT1** / **BUT2** et, quand elle est identifiée, la ressource du programme (ex. `R113`). La page d'accueil peut être filtrée par année.
-
 **[netlab-xi.vercel.app](https://netlab-xi.vercel.app)**
 
 ---
 
 ## Outils
 
+Chaque outil porte une pastille **BUT1** / **BUT2** et la ressource du programme quand elle est identifiée. La page d'accueil peut être filtrée par année.
+
 ### Réseaux
-| Outil | Description |
-|---|---|
-| IP / Géolocalisation | Lookup d'adresse IP, ASN, FAI, localisation sur carte |
-| Monitoring réseau | Ping, traceroute, mesure de latence |
-| Calcul CIDR | Sous-réseaux, masques, plages d'adresses |
-| Modèle OSI | 7 couches, protocoles associés, encapsulation |
-| Analyseur de trames | Décodage Ethernet · ARP · IPv4 · ICMP · TCP · UDP style Wireshark |
-| VLSM & IPv6 (BUT1 · R102 · R201) | Plan d'adressage à masque variable ; compression IPv6, types d'adresses, préfixe, EUI-64 |
-| Routage IP (BUT1 · R201 · R301) | Table de routage éditable : préfixe le plus long, distance administrative, métrique ; coût OSPF |
-| Services réseau (BUT1 · R203) | DHCP (DORA), ARP, DNS récursif/itératif, TCP (handshake, fermeture) en diagramme de séquence ; ports connus |
-| Spanning Tree Protocol | Éditeur de topologie de switches, élection du root bridge, root/designated/blocked ports |
-| Sélection BGP | Comparateur de chemins pas à pas (Weight, Local Pref, AS-Path, Origine, MED, eBGP/iBGP, Router ID) |
-
-### Architecture & Bas niveau
-| Outil | Description |
-|---|---|
-| Simulation ARM | Exécution d'instructions, registres, trace pas à pas |
-| Conversions de bases | Binaire ↔ Octal ↔ Décimal ↔ Hexadécimal |
-| IEEE 754 | Décomposition virgule flottante 32/64 bits, bits colorés |
-| Circuits logiques | Expression booléenne → table de vérité + FND |
-
-### Programmation
-| Outil | Description |
-|---|---|
-| Graphes & Dijkstra (BUT1 · R201 · R301) | Éditeur de graphe, plus court chemin animé |
-| Visualisation des tris | Bulles, insertion, fusion, rapide — animé |
+| Outil | Année · ressource | Description |
+|---|---|---|
+| [IP / Géolocalisation](/ip-geo) | BUT1 · R101 | Lookup d'IP, carte, ASN, FAI |
+| [Monitoring réseau](/monitoring) | BUT1 · R101 | Ping, traceroute, latence |
+| [Calcul CIDR](/cidr) | BUT1 · R102 | Sous-réseaux, masques, plages |
+| [VLSM & IPv6](/vlsm-ipv6) | BUT1 · R102 · R201 | Plan d'adressage à masque variable, compression IPv6, EUI-64 |
+| [Modèle OSI](/osi) | BUT1 · R102 | 7 couches, protocoles, encapsulation |
+| [Analyseur de trames](/trames) | BUT1 · R102 | Ethernet, ARP, IPv4, TCP, UDP, ICMP — style Wireshark |
+| [Routage IP](/routage) | BUT1 · R201 · R301 | Préfixe le plus long, distance administrative, coût OSPF |
+| [Services réseau](/services-reseau) | BUT1 · R203 | DHCP, ARP, DNS, TCP message par message + ports connus |
+| [Commutation & VLAN](/commutation) | BUT1 · R103 · R301 | Table MAC, apprentissage, inondation, VLAN et trunk 802.1Q |
+| [ACL & wildcard](/acl) | BUT1 · R103 · R201 | Masque générique, évaluation d'une ACL étendue ligne par ligne |
+| [NAT & PAT](/nat) | BUT1 · R201 | NAT statique, dynamique et PAT : table de traduction animée |
+| [Spanning Tree Protocol](/spanning-tree) | BUT2 · R301 | Root bridge, root/designated ports, blocage des boucles |
+| [Sélection BGP](/bgp) | BUT2 · R302 | Weight, Local Pref, AS-Path, MED — meilleur chemin pas à pas |
 
 ### Télécoms & Transmission
-| Outil | Année | Description |
+| Outil | Année · ressource | Description |
 |---|---|---|
-| Supports de transmission | BUT1 · R105 | Convertisseur dBm/dBW/dBµV, atténuation d'un câble, vitesse de propagation, impédance caractéristique Z₀, coefficient de réflexion et ROS, onde EM plane |
-| Codes correcteurs | BUT2 · R305 | Parité, CRC avec division polynomiale pas à pas, Hamming (7,4) avec syndrome, distance de Hamming — erreurs injectables au clic |
-| Codage en ligne | BUT2 · R305 | NRZ, RZ, Manchester, Manchester différentiel, Miller, bipolaire (AMI) + diagramme de l'œil |
-| Fibre optique | BUT2 · R306 | Snell-Descartes, ouverture numérique, fréquence normalisée V, mono/multimode, dispersion intermodale, bilan de liaison, trace OTDR |
+| [Supports de transmission](/supports-transmission) | BUT1 · R105 | dBm/dBµV, atténuation des câbles, propagation, Z₀, réflexion |
+| [Téléphonie & VoIP](/telephonie) | BUT1 · R204 | Débit d'un appel VoIP par codec, Erlang B, délai de bout en bout |
+| [Télécoms spatiales](/telecoms-spatiales) | BUT1 · R121 · R221 · R321 | Espace libre, gain d'antenne, bilan satellite, mélangeur, FDM |
+| [Codes correcteurs](/codes-correcteurs) | BUT2 · R305 | Parité, CRC pas à pas, Hamming (7,4), distance de Hamming |
+| [Modulations numériques](/modulations) | BUT2 · R305 | Constellations PSK/QAM, bruit, TEB selon Eb/N0, débit |
+| [Codage en ligne](/codage-ligne) | BUT2 · R305 | NRZ, RZ, Manchester, Miller, AMI + diagramme de l'œil |
+| [Fibre optique](/fibre-optique) | BUT2 · R306 | Snell-Descartes, ouverture numérique, modes, bilan, OTDR |
+| [Réseaux d'accès](/reseaux-acces) | BUT2 · R307 | Budget optique GPON, taux de partage, débit xDSL selon la distance |
 
 ### Signal & Électronique
-| Outil | Année | Description |
+| Outil | Année · ressource | Description |
 |---|---|---|
-| Signaux périodiques | BUT1 · R113 | Générateur sinus/carré/triangle/scie, somme de signaux, valeurs moyenne et efficace, déphasage, vecteurs de Fresnel |
-| Échantillonnage & numérisation | BUT1 · R206 | Shannon-Nyquist, repliement de spectre, quantification (CAN), débit PCM |
-| Électronique & filtres | BUT1 · R104 · R205 | Impédances R/L/C en série/parallèle, filtres RC/RL/RLC, dérivateur/intégrateur, diagramme de Bode réel + asymptotique |
-| Séries de Fourier | BUT2 · R314 | Reconstruction harmonique par harmonique, spectre d'amplitude, tableau des coefficients, Parseval |
-
-### Bases de données
-| Outil | Description |
-|---|---|
-| Bases de données | Algèbre relationnelle (σ, π, ⋈) interactive + normalisation 1FN/2FN/3FN pas à pas à partir de dépendances fonctionnelles |
+| [Signaux périodiques](/signaux) | BUT1 · R113 | Générateur sinus/carré/triangle, somme, déphasage, Fresnel |
+| [Échantillonnage](/echantillonnage) | BUT1 · R206 | Shannon-Nyquist, repliement, quantification, débit PCM |
+| [Électronique & filtres](/filtres) | BUT1 · R104 · R205 | Impédances R/L/C, filtres RC/RL/RLC, diagramme de Bode |
+| [Séries de Fourier](/fourier) | BUT2 · R314 | Reconstruction harmonique par harmonique, spectre, Parseval |
 
 ### Mathématiques
-| Outil | Description |
-|---|---|
-| Nombres complexes (BUT1 · R114) | Formes algébrique/trigonométrique/exponentielle, opérations, plan complexe, impédances |
-| Fonctions & Dérivées | Tracé, dérivée symbolique, tangente, tableau de variation, racines, primitive — analyse automatique |
-| Intégrales | Méthodes numériques (rectangles, trapèzes, Simpson) avec visualisation |
-| Suites | Arithmétiques, géométriques, récurrence, Fibonacci |
-| Matrices | Déterminant, inverse, élimination de Gauss-Jordan pas à pas |
+| Outil | Année · ressource | Description |
+|---|---|---|
+| [Nombres complexes](/complexes) | BUT1 · R114 | Formes algébrique/exponentielle, opérations, plan complexe |
+| [Calculateur pas à pas](/maths) | BUT1 · R213 · R214 | Fonctions & dérivées, intégrales numériques, suites, matrices (Gauss-Jordan) |
+
+### Programmation
+| Outil | Année · ressource | Description |
+|---|---|---|
+| [Visualisation des tris](/tri) | BUT1 · R107 | Bulles, insertion, fusion, rapide — animé |
+| [Graphes & Dijkstra](/graphes) | BUT1 · R201 · R301 | Éditeur de graphe, plus court chemin animé |
+
+### Architecture
+| Outil | Année · ressource | Description |
+|---|---|---|
+| [Conversions de bases](/bases) | BUT1 · R106 | Binaire ↔ Octal ↔ Décimal ↔ Hexadécimal |
+| [Circuits logiques](/circuits) | BUT1 · R106 | Expression booléenne → table de vérité + FND |
+| [IEEE 754](/ieee754) | BUT1 · R106 | Décomposition flottant 32/64 bits, bits colorés |
+| [Simulation ARM](/arm) | BUT1 · R106 | Exécution d'instructions, registres, trace |
+
+### Systèmes & Données
+| Outil | Année · ressource | Description |
+|---|---|---|
+| [Droits Linux](/droits-linux) | BUT1 · R108 | chmod en octal et rwx, bits spéciaux, umask |
+| [Bases de données](/bdd) | BUT2 · R310 | Algèbre relationnelle (σ, π, ⋈) et normalisation 1FN/2FN/3FN pas à pas |
+| [Annuaire LDAP](/ldap) | BUT2 · R304 | Arbre DIT, LDIF, filtres de recherche testés comme ldapsearch |
 
 ### Autres
-Outils qui ne sont rattachés à aucun module identifié du programme (pas de pastille d'année).
-
-| Outil | Description |
-|---|---|
-| Calculateurs Télécoms | Théorème de Shannon, débit, atténuation, modulation QAM, bilan de liaison |
-| Ordonnancement CPU | FIFO, SJF, SRTF, Round Robin, Priorité — diagramme de Gantt animé |
-| Remplacement de pages | FIFO, LRU, Optimal — compteur de défauts de page |
-| Cryptographie classique | César, Vigenère, XOR, analyse fréquentielle |
-| Simulation 3D | Figures géométriques 3D, sommets éditables, rotation |
+| Outil | Année · ressource | Description |
+|---|---|---|
+| [Calculateurs Télécoms](/telecoms) | — | Shannon, débit, atténuation, modulation QAM, bilan liaison |
+| [Ordonnancement CPU](/ordonnancement) | — | FIFO, SJF, SRTF, Round Robin, Priorité + Gantt |
+| [Remplacement de pages](/remplacement) | — | FIFO, LRU, Optimal — défauts de page |
+| [Cryptographie classique](/crypto) | — | César, Vigenère, XOR, analyse fréquentielle |
+| [Simulation 3D](/simulation-3d) | — | Figures 3D, sommets éditables, rotation |
 
 ---
 

@@ -35,6 +35,9 @@ export const CATEGORIES: Category[] = [
       { href: "/trames",        icon: "🔬", label: "Analyseur de trames",    desc: "Ethernet, ARP, IPv4, TCP, UDP, ICMP — style Wireshark",      annee: 1, module: "R102" },
       { href: "/routage",       icon: "🧭", label: "Routage IP",             desc: "Préfixe le plus long, distance administrative, coût OSPF",   annee: 1, module: "R201 · R301" },
       { href: "/services-reseau", icon: "🛎", label: "Services réseau",      desc: "DHCP, ARP, DNS, TCP message par message + ports connus",     annee: 1, module: "R203" },
+      { href: "/commutation",   icon: "🔀", label: "Commutation & VLAN",     desc: "Table MAC, apprentissage, inondation, VLAN et trunk 802.1Q",  annee: 1, module: "R103 · R301" },
+      { href: "/acl",           icon: "🚦", label: "ACL & wildcard",         desc: "Masque générique, évaluation d'une ACL étendue ligne par ligne", annee: 1, module: "R103 · R201" },
+      { href: "/nat",           icon: "🔁", label: "NAT & PAT",              desc: "NAT statique, dynamique et PAT : table de traduction animée", annee: 1, module: "R201" },
       { href: "/spanning-tree", icon: "🌳", label: "Spanning Tree Protocol", desc: "Root bridge, root/designated ports, blocage des boucles",     annee: 2, module: "R301" },
       { href: "/bgp",           icon: "🌍", label: "Sélection BGP",          desc: "Weight, Local Pref, AS-Path, MED — meilleur chemin pas à pas", annee: 2, module: "R302" },
     ],
@@ -44,9 +47,13 @@ export const CATEGORIES: Category[] = [
     color: "#ec4899",
     tools: [
       { href: "/supports-transmission", icon: "🔌", label: "Supports de transmission", desc: "dBm/dBµV, atténuation des câbles, propagation, Z₀, réflexion", annee: 1, module: "R105" },
+      { href: "/telephonie",            icon: "☎️", label: "Téléphonie & VoIP",        desc: "Débit d'un appel VoIP par codec, Erlang B, délai de bout en bout", annee: 1, module: "R204" },
+      { href: "/telecoms-spatiales",    icon: "🛰", label: "Télécoms spatiales",       desc: "Espace libre, gain d'antenne, bilan satellite, mélangeur, FDM", annee: 1, module: "R121 · R221 · R321" },
       { href: "/codes-correcteurs",     icon: "🛡", label: "Codes correcteurs",        desc: "Parité, CRC pas à pas, Hamming (7,4), distance de Hamming",   annee: 2, module: "R305" },
+      { href: "/modulations",           icon: "✳️", label: "Modulations numériques",   desc: "Constellations PSK/QAM, bruit, TEB selon Eb/N0, débit",        annee: 2, module: "R305" },
       { href: "/codage-ligne",          icon: "🔡", label: "Codage en ligne",          desc: "NRZ, RZ, Manchester, Miller, AMI + diagramme de l'œil",       annee: 2, module: "R305" },
       { href: "/fibre-optique",         icon: "🔦", label: "Fibre optique",            desc: "Snell-Descartes, ouverture numérique, modes, bilan, OTDR",      annee: 2, module: "R306" },
+      { href: "/reseaux-acces",         icon: "🏠", label: "Réseaux d'accès",          desc: "Budget optique GPON, taux de partage, débit xDSL selon la distance", annee: 2, module: "R307" },
     ],
   },
   {
@@ -76,7 +83,7 @@ export const CATEGORIES: Category[] = [
     ],
   },
   {
-    label: "Architecture & Bas niveau",
+    label: "Architecture",
     color: "#f59e0b",
     tools: [
       { href: "/bases",    icon: "🔣", label: "Conversions de bases", desc: "Binaire ↔ Octal ↔ Décimal ↔ Hexadécimal",  annee: 1, module: "R106" },
@@ -86,10 +93,12 @@ export const CATEGORIES: Category[] = [
     ],
   },
   {
-    label: "Bases de données",
-    color: "#3b82f6",
+    label: "Systèmes & Données",
+    color: "#22c55e",
     tools: [
+      { href: "/droits-linux", icon: "🐧", label: "Droits Linux", desc: "chmod en octal et rwx, bits spéciaux, umask",                annee: 1, module: "R108" },
       { href: "/bdd", icon: "🗄", label: "Bases de données", desc: "Algèbre relationnelle (σ, π, ⋈) et normalisation 1FN/2FN/3FN pas à pas", annee: 2, module: "R310" },
+      { href: "/ldap",         icon: "📇", label: "Annuaire LDAP", desc: "Arbre DIT, LDIF, filtres de recherche testés comme ldapsearch", annee: 2, module: "R304" },
     ],
   },
   {
