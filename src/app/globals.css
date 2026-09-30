@@ -34,3 +34,8 @@ body {
 .glow-purple {
   box-shadow: 0 0 20px rgba(124, 58, 237, 0.2);
 }
+
+/* Carte IP : tuiles OpenStreetMap assombries */
+.map-tiles-dark {
+  filter: invert(1) hue-rotate(180deg) brightness(0.9) contrast(0.9);
+}

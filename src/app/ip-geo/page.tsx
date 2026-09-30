@@ -5,11 +5,13 @@ import dynamic from "next/dynamic";
 const IpMap = dynamic(() => import("@/components/IpMap"), { ssr: false });
 
 interface IpData {
-  status: string;
   query: string;
+  resolvedFrom: string | null;
+  type: string;
   country: string;
   countryCode: string;
-  regionName: string;
+  flag: string;
+  region: string;
   city: string;
   zip: string;
   lat: number;
@@ -18,10 +20,25 @@ interface IpData {
   isp: string;
   org: string;
   as: string;
-  mobile: boolean;
-  proxy: boolean;
-  hosting: boolean;
-  message?: string;
+  domain: string;
+  privacy: {
+    verdict: string;
+    confidence: number;
+    isVpn: boolean;
+    isProxy: boolean;
+    isTor: boolean;
+    isDatacenter: boolean;
+    provider: string | null;
+    prefix: string | null;
+    abuseContact: string | null;
+    signals: { detail: string; weight: number }[];
+  } | null;
+  reputation: {
+    listed: number;
+    networkType: string | null;
+    sources: { list: string; category: string; maintainer: string | null; since: string | null }[];
+  } | null;
+  error?: string;
 }
 
 export default function IpGeoPage() {
@@ -37,8 +54,8 @@ export default function IpGeoPage() {
     try {
       const res = await fetch(`/api/ip?q=${encodeURIComponent(q)}`);
       const json: IpData = await res.json();
-      if (json.status === "fail") {
-        setError(json.message || "IP introuvable");
+      if (!res.ok || json.error) {
+        setError(json.error || "IP introuvable");
         setData(null);
       } else {
         setData(json);
@@ -102,25 +119,99 @@ export default function IpGeoPage() {
       {data && (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
           <div className="glass rounded-xl p-5 space-y-2.5 text-sm">
-            <Row label="IP" value={data.query} accent />
-            <Row label="Pays" value={`${data.country} (${data.countryCode})`} />
-            <Row label="Région" value={data.regionName} />
+            <Row label="IP" value={`${data.query} (${data.type})`} accent />
+            {data.resolvedFrom && <Row label="Domaine" value={data.resolvedFrom} />}
+            <Row label="Pays" value={`${data.flag} ${data.country} (${data.countryCode})`} />
+            <Row label="Région" value={data.region} />
             <Row label="Ville" value={`${data.city} ${data.zip}`} />
             <Row label="Coordonnées" value={`${data.lat}, ${data.lon}`} />
             <Row label="Fuseau" value={data.timezone} />
             <Row label="FAI" value={data.isp} />
             <Row label="Org" value={data.org} />
             <Row label="AS" value={data.as} />
-            <div className="flex gap-3 pt-2 border-t border-[#2a2d3a]">
-              <Tag active={data.mobile} label="Mobile" />
-              <Tag active={data.proxy} label="Proxy" color="red" />
-              <Tag active={data.hosting} label="Hébergement" color="yellow" />
-            </div>
+            {data.privacy?.prefix && <Row label="Préfixe" value={data.privacy.prefix} />}
+            {data.privacy && (
+              <div className="flex flex-wrap gap-2 pt-2 border-t border-[#2a2d3a]">
+                <Tag active={data.privacy.isVpn} label="VPN" color="red" />
+                <Tag active={data.privacy.isProxy} label="Proxy" color="red" />
+                <Tag active={data.privacy.isTor} label="Tor" color="red" />
+                <Tag active={data.privacy.isDatacenter} label="Datacenter" color="yellow" />
+              </div>
+            )}
           </div>
 
           <div className="glass rounded-xl overflow-hidden" style={{ height: "320px" }}>
             <IpMap lat={data.lat} lon={data.lon} label={`${data.city}, ${data.country}`} />
           </div>
+
+          <div className="md:col-span-2">
+            <Reputation data={data} />
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
+const VERDICTS: Record<string, string> = {
+  clean: "Aucun signe d'anonymisation",
+  vpn_detected: "VPN / anonymiseur détecté",
+  proxy_detected: "Proxy détecté",
+  suspicious: "Suspect",
+};
+
+function Reputation({ data }: { data: IpData }) {
+  const { privacy, reputation } = data;
+  if (!privacy && !reputation) {
+    return <p className="text-xs text-[#64748b]">Services de réputation indisponibles pour le moment.</p>;
+  }
+  const listed = reputation?.listed ?? 0;
+  return (
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+      {privacy && (
+        <div className="glass rounded-xl p-5 text-sm">
+          <h2 className="text-xs font-bold uppercase tracking-wider text-[#64748b] mb-3">Anonymisation</h2>
+          <p className={`font-semibold mb-1 ${privacy.verdict === "clean" ? "text-green-400" : "text-red-400"}`}>
+            {VERDICTS[privacy.verdict] ?? privacy.verdict}
+            {privacy.provider && <span className="font-normal text-[#94a3b8]"> · {privacy.provider}</span>}
+          </p>
+          <p className="text-xs text-[#64748b] mb-3">Confiance : {Math.round(privacy.confidence * 100)} %</p>
+          {privacy.signals.length > 0 && (
+            <ul className="space-y-1.5 text-xs text-[#94a3b8]">
+              {privacy.signals.map((s) => (
+                <li key={s.detail} className="flex gap-2">
+                  <span className={s.weight > 0 ? "text-red-400" : "text-[#475569]"}>{s.weight > 0 ? "●" : "○"}</span>
+                  {s.detail}
+                </li>
+              ))}
+            </ul>
+          )}
+          {privacy.abuseContact && (
+            <p className="text-xs text-[#64748b] mt-3">Contact abus : <span className="font-mono">{privacy.abuseContact}</span></p>
+          )}
+          <p className="text-[10px] text-[#475569] mt-3">Source : IPLogs</p>
+        </div>
+      )}
+
+      {reputation && (
+        <div className="glass rounded-xl p-5 text-sm">
+          <h2 className="text-xs font-bold uppercase tracking-wider text-[#64748b] mb-3">Listes noires</h2>
+          <p className={`font-semibold mb-3 ${listed ? "text-red-400" : "text-green-400"}`}>
+            {listed ? `Présente dans ${listed} liste${listed > 1 ? "s" : ""}` : "Absente des listes noires publiques"}
+          </p>
+          {listed > 0 && (
+            <ul className="space-y-1.5 text-xs max-h-48 overflow-y-auto">
+              {reputation.sources.map((s) => (
+                <li key={s.list} className="flex justify-between gap-3">
+                  <span className="font-mono text-[#e2e8f0]">{s.list}</span>
+                  <span className="text-[#64748b] text-right">
+                    {s.category}{s.since && ` · depuis le ${new Date(s.since).toLocaleDateString("fr-FR")}`}
+                  </span>
+                </li>
+              ))}
+            </ul>
+          )}
+          <p className="text-[10px] text-[#475569] mt-3">Source : IPGuardian (140+ listes publiques)</p>
         </div>
       )}
     </div>

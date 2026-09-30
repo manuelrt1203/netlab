@@ -27,7 +27,7 @@ export const CATEGORIES: Category[] = [
     label: "Réseaux",
     color: "#00d4ff",
     tools: [
-      { href: "/ip-geo",        icon: "🌐", label: "IP / Géolocalisation",   desc: "Lookup d'IP, carte, ASN, FAI",                               annee: 1, module: "R101" },
+      { href: "/ip-geo",        icon: "🌐", label: "IP / Géolocalisation",   desc: "Lookup d'IP, carte, ASN, FAI, détection VPN/Tor, listes noires", annee: 1, module: "R101" },
       { href: "/monitoring",    icon: "📡", label: "Monitoring réseau",      desc: "Ping, traceroute, latence",                                  annee: 1, module: "R101" },
       { href: "/cidr",          icon: "🔢", label: "Calcul CIDR",            desc: "Sous-réseaux, masques, plages",                              annee: 1, module: "R102" },
       { href: "/vlsm-ipv6",     icon: "🧩", label: "VLSM & IPv6",            desc: "Plan d'adressage à masque variable, compression IPv6, EUI-64", annee: 1, module: "R102 · R201" },
@@ -35,6 +35,9 @@ export const CATEGORIES: Category[] = [
       { href: "/trames",        icon: "🔬", label: "Analyseur de trames",    desc: "Ethernet, ARP, IPv4, TCP, UDP, ICMP — style Wireshark",      annee: 1, module: "R102" },
       { href: "/routage",       icon: "🧭", label: "Routage IP",             desc: "Préfixe le plus long, distance administrative, coût OSPF",   annee: 1, module: "R201 · R301" },
       { href: "/services-reseau", icon: "🛎", label: "Services réseau",      desc: "DHCP, ARP, DNS, TCP message par message + ports connus",     annee: 1, module: "R203" },
+      { href: "/dns",           icon: "🔎", label: "Lookup DNS",             desc: "A, AAAA, MX, TXT, NS… via DNS over HTTPS, 2 résolveurs comparés", annee: 1, module: "R203" },
+      { href: "/whois",         icon: "📜", label: "WHOIS / RDAP",           desc: "Propriétaire, registrar, dates et NS d'un domaine ou d'une IP", annee: 1, module: "R203" },
+      { href: "/mac",           icon: "🏷", label: "Adresse MAC",            desc: "Constructeur (OUI), bits unicast/multicast et universel/local", annee: 1, module: "R102" },
       { href: "/commutation",   icon: "🔀", label: "Commutation & VLAN",     desc: "Table MAC, apprentissage, inondation, VLAN et trunk 802.1Q",  annee: 1, module: "R103 · R301" },
       { href: "/acl",           icon: "🚦", label: "ACL & wildcard",         desc: "Masque générique, évaluation d'une ACL étendue ligne par ligne", annee: 1, module: "R103 · R201" },
       { href: "/nat",           icon: "🔁", label: "NAT & PAT",              desc: "NAT statique, dynamique et PAT : table de traduction animée", annee: 1, module: "R201" },

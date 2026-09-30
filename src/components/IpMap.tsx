@@ -21,9 +21,11 @@ function Recenter({ lat, lon }: { lat: number; lon: number }) {
 export default function IpMap({ lat, lon, label }: { lat: number; lon: number; label: string }) {
   return (
     <MapContainer center={[lat, lon]} zoom={11} style={{ height: "100%", width: "100%", background: "#1a1d27" }}>
+      {/* Les fonds CARTO exigent désormais une clé : tuiles OSM, assombries en CSS (globals.css) */}
       <TileLayer
-        url="https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png"
-        attribution='&copy; <a href="https://carto.com/">CARTO</a>'
+        url="https://tile.openstreetmap.org/{z}/{x}/{y}.png"
+        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+        className="map-tiles-dark"
       />
       <Recenter lat={lat} lon={lon} />
       <Marker position={[lat, lon]}>
